@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:note_app/widgets/note_item.dart';
+import 'package:note_app/widgets/action_appBar.dart';
+
+import '../widgets/note_list_view.dart';
 
 class NotesScreen extends StatelessWidget {
   const NotesScreen({super.key});
@@ -16,26 +18,16 @@ class NotesScreen extends StatelessWidget {
             fontSize: 30
           ),),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsetsDirectional.only(end: 24),
-            child: Container(
-              height: 45,
-               width: 45,
-               decoration: BoxDecoration(
-                 borderRadius: BorderRadiusDirectional.circular(10),
-                 color: Colors.grey.withOpacity(.3)
-               ),
-              child: const Icon(Icons.search,size: 28,),
-            ),
-          )
+        actions: const [
+         ActionAppBar()
         ],
       ),
       body:  const Column(
         children: [
-         NoteItem()
+         Expanded(child: NotesListView())
         ],
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){}, child: const Icon(Icons.add)),
     );
   }
 }
