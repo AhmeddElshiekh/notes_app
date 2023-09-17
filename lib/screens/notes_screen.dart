@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:note_app/widgets/action_appBar.dart';
-
 import '../widgets/note_list_view.dart';
+import '../widgets/show_model_bottom_sheet.dart';
 
 class NotesScreen extends StatelessWidget {
   const NotesScreen({super.key});
@@ -27,7 +27,11 @@ class NotesScreen extends StatelessWidget {
          Expanded(child: NotesListView())
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){}, child: const Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(
+          onPressed: (){
+        showModalBottomSheet(context: context, builder: (context) {return const ShowModelSheet(); },);
+      }, child: const Icon(Icons.add,)),
     );
   }
 }
+
