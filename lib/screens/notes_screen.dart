@@ -19,7 +19,7 @@ class NotesScreen extends StatelessWidget {
           ),),
         ),
         actions: const [
-         ActionAppBar()
+         ActionAppBar(button: Icons.search,)
         ],
       ),
       body:  const Column(

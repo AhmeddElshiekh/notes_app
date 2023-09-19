@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/screens/edit_notes_screen.dart';
 
 class NoteItem extends StatelessWidget {
   const NoteItem({super.key});
@@ -7,37 +8,42 @@ class NoteItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Padding(
       padding: const EdgeInsetsDirectional.only(bottom: 8),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadiusDirectional.circular(10),
-          color: Colors.grey,
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const EditNotesScreen(),));
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadiusDirectional.circular(10),
+            color: Colors.grey,
 
-        ),
-        child:  Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            ListTile(
-              title: const Padding(
-                padding: EdgeInsetsDirectional.only(top: 44),
-                child: Text('Flutter tips',style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.black
-                ),),
+          ),
+          child:  Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              ListTile(
+                title: const Padding(
+                  padding: EdgeInsetsDirectional.only(top: 44),
+                  child: Text('Flutter tips',style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.black
+                  ),),
+                ),
+                subtitle:  Padding(
+                  padding:const EdgeInsetsDirectional.only(top: 18,bottom: 24,),
+                  child: Text('Build your career with Tharwat Samy',style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black.withOpacity(.4)
+                  ),),
+                ),
+                trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.delete,size: 30,color: Colors.black,)),
               ),
-              subtitle:  Padding(
-                padding:const EdgeInsetsDirectional.only(top: 18,bottom: 24,),
-                child: Text('Build your career with Tharwat Samy',style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black.withOpacity(.4)
-                ),),
+              Padding(
+                padding: const EdgeInsetsDirectional.only(bottom: 44,end: 28),
+                child: Text('May 21,2022',style: TextStyle(color: Colors.black.withOpacity(.4)),),
               ),
-              trailing: IconButton(onPressed: (){}, icon: const Icon(Icons.delete,size: 30,color: Colors.black,)),
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.only(bottom: 44,end: 28),
-              child: Text('May 21,2022',style: TextStyle(color: Colors.black.withOpacity(.4)),),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

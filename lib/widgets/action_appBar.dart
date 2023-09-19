@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ActionAppBar extends StatelessWidget {
-  const ActionAppBar({super.key});
-
+  const ActionAppBar({super.key, required this.button});
+  final IconData button;
   @override
   Widget build(BuildContext context) {
     return   Padding(
@@ -14,7 +14,7 @@ class ActionAppBar extends StatelessWidget {
             borderRadius: BorderRadiusDirectional.circular(10),
             color: Colors.grey.withOpacity(.3)
         ),
-        child: const Icon(Icons.search,size: 28,),
+        child:  Icon(button,size: 28,),
       ),
     );
   }
