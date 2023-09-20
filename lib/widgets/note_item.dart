@@ -13,7 +13,7 @@ class NoteItem extends StatelessWidget {
       padding: const EdgeInsetsDirectional.only(bottom: 8),
       child: GestureDetector(
         onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const EditNotesScreen(),));
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>  EditNotesScreen(note:  note,),));
         },
         child: Container(
           decoration: BoxDecoration(
@@ -39,9 +39,10 @@ class NoteItem extends StatelessWidget {
                       color: Colors.black.withOpacity(.4)
                   ),),
                 ),
-                trailing: IconButton(onPressed: (){
-                  note.delete();
-                  NotesCubit.get(context).getAllNotes();
+                trailing: IconButton(onPressed: ()async{
+                  await note.delete().then((value){
+                    NotesCubit.get(context).getAllNotes();
+                  });
 
                 }, icon: const Icon(Icons.delete,size: 30,color: Colors.black,)),
               ),

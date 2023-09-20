@@ -8,3 +8,7 @@ class AddNoteLoadingState extends NoteStates {}
 class AddNoteSuccessfulState extends NoteStates {}
 class AddNoteErrorState extends NoteStates {}
 
+
+class GetAllNotesSuccessfulState extends NoteStates {}
+
+
