@@ -27,4 +27,5 @@ class NotesCubit extends Cubit<NoteStates> {
     notes = notesBox.values.toList();
   }
 
+
 }
