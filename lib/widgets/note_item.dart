@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/model/note_model.dart';
 import 'package:note_app/screens/edit_notes_screen.dart';
 
 class NoteItem extends StatelessWidget {
-  const NoteItem({super.key});
-
+  const NoteItem({super.key, required this.note});
+  final NoteModel note;
   @override
   Widget build(BuildContext context) {
     return  Padding(
@@ -22,16 +23,16 @@ class NoteItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               ListTile(
-                title: const Padding(
-                  padding: EdgeInsetsDirectional.only(top: 44),
-                  child: Text('Flutter tips',style: TextStyle(
+                title:  Padding(
+                  padding: const EdgeInsetsDirectional.only(top: 44),
+                  child: Text(note.title,style: const TextStyle(
                       fontSize: 24,
                       color: Colors.black
                   ),),
                 ),
                 subtitle:  Padding(
                   padding:const EdgeInsetsDirectional.only(top: 18,bottom: 24,),
-                  child: Text('Build your career with Tharwat Samy',style: TextStyle(
+                  child: Text(note.content,style: TextStyle(
                       fontSize: 18,
                       color: Colors.black.withOpacity(.4)
                   ),),
@@ -40,7 +41,7 @@ class NoteItem extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsetsDirectional.only(bottom: 44,end: 28),
-                child: Text('May 21,2022',style: TextStyle(color: Colors.black.withOpacity(.4)),),
+                child: Text(note.date,style: TextStyle(color: Colors.black.withOpacity(.4)),),
               ),
             ],
           ),

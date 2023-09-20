@@ -1,14 +1,31 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:note_app/model/note_model.dart';
 import 'package:note_app/widgets/custom_button.dart';
 import 'package:note_app/widgets/custom_text_form_filed.dart';
+
+import '../cubit/notes/notes_cubit.dart';
 
 class ShowModelSheet extends StatelessWidget {
   const ShowModelSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: AddNoteForm(),
+    return BlocConsumer<NotesCubit, NoteStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return  AbsorbPointer(
+          absorbing: state is AddNoteLoadingState ? true : false,
+          child:  SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: const AddNoteForm(),
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -26,53 +43,74 @@ class _AddNoteFormState extends State<AddNoteForm> {
   var titleController = TextEditingController();
   var contentController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
-      child: Column(
-        children: [
-          Padding(
-            padding:
-                const EdgeInsetsDirectional.only(start: 16, end: 16, top: 32),
-            child: CustomTextFormFiled(
-                hint: 'Title',
-                controller: titleController,
-                onValidate: (val) {
-                  if (val?.isEmpty ?? true) {
-                    return 'please enter a title';
-                  }
-                  return null;
-                }),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.only(start: 16, end: 16, top: 32),
-            child: CustomTextFormFiled(
-                hint: 'content',
-                maxLines: 5,
-                controller: contentController,
-                onValidate: (val) {
-                  if (val?.isEmpty ?? true) {
-                    return 'please enter a content';
-                  }
-                  return null;
-                }),
-          ),
-          const SizedBox(
-            height: 100,
-          ),
-           Padding(
-            padding: const EdgeInsetsDirectional.only(start: 16, end: 16, top: 32),
-            child: CustomButton(text: 'Add',onTap: (){
-              if(formKey.currentState!.validate()){
-                formKey.currentState!.save();
-              }
-            }),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-        ],
+      child: BlocBuilder<NotesCubit, NoteStates>(
+        builder: (context, state) {
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsetsDirectional.only(
+                    start: 16, end: 16, top: 32),
+                child: CustomTextFormFiled(
+                    hint: 'Title',
+                    controller: titleController,
+                    onValidate: (val) {
+                      if (val?.isEmpty ?? true) {
+                        return 'please enter a title';
+                      }
+                      return null;
+                    }),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.only(
+                    start: 16, end: 16, top: 32),
+                child: CustomTextFormFiled(
+                    hint: 'content',
+                    maxLines: 5,
+                    controller: contentController,
+                    onValidate: (val) {
+                      if (val?.isEmpty ?? true) {
+                        return 'please enter a content';
+                      }
+                      return null;
+                    }),
+              ),
+              const SizedBox(
+                height: 100,
+              ),
+              Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                      start: 16, end: 16, top: 32),
+                  child: ConditionalBuilder(
+                      condition: state is! AddNoteLoadingState,
+                      builder: (context) => CustomButton(
+                          text: 'Add',
+                          onTap: () {
+                            final now = DateTime.now();
+                            if (formKey.currentState!.validate()) {
+                              formKey.currentState!.save();
+                              var noteModel = NoteModel(
+                                  title: titleController.text,
+                                  content: contentController.text,
+                                  date:   DateFormat.yMMMMd('en_US').format(now).toString(),
+                                  color: Colors.blue.value);
+                              BlocProvider.of<NotesCubit>(context)
+                                  .addNote(noteModel);
+                            }
+                          }),
+                      fallback: (context) => const Center(
+                            child: CircularProgressIndicator(),
+                          ))),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          );
+        },
       ),
     );
   }

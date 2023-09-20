@@ -4,11 +4,11 @@ import 'package:meta/meta.dart';
 import 'package:note_app/constant.dart';
 import 'package:note_app/model/note_model.dart';
 
-part 'add_note_state.dart';
+part 'notes_state.dart';
 
-class AddNoteCubit extends Cubit<AddNoteStates> {
-  AddNoteCubit() : super(AddNoteInitial());
-  static AddNoteCubit get(context) => BlocProvider.of(context);
+class NotesCubit extends Cubit<NoteStates> {
+  NotesCubit() : super(AddNoteInitial());
+  static NotesCubit get(context) => BlocProvider.of(context);
 
   addNote(NoteModel model)async{
     emit(AddNoteLoadingState());
@@ -19,6 +19,12 @@ class AddNoteCubit extends Cubit<AddNoteStates> {
      print('error when add note $error');
      emit(AddNoteErrorState());
    });
+  }
+
+  List<NoteModel> notes = [];
+  getAllNotes() {
+    var notesBox = Hive.box<NoteModel>(kNoteBox);
+    notes = notesBox.values.toList();
   }
 
 }
