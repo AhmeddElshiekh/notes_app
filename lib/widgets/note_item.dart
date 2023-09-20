@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:note_app/model/note_model.dart';
 import 'package:note_app/screens/edit_notes_screen.dart';
 
+import '../cubit/notes/notes_cubit.dart';
+
 class NoteItem extends StatelessWidget {
   const NoteItem({super.key, required this.note});
   final NoteModel note;
@@ -38,8 +40,9 @@ class NoteItem extends StatelessWidget {
                   ),),
                 ),
                 trailing: IconButton(onPressed: (){
-
                   note.delete();
+                  NotesCubit.get(context).getAllNotes();
+
                 }, icon: const Icon(Icons.delete,size: 30,color: Colors.black,)),
               ),
               Padding(

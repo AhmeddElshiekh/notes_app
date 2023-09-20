@@ -14,13 +14,19 @@ class ShowModelSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NotesCubit, NoteStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is AddNoteSuccessfulState){
+          NotesCubit.get(context).getAllNotes();
+          Navigator.pop(context);
+        }
+      },
       builder: (context, state) {
-        return  AbsorbPointer(
+        return AbsorbPointer(
           absorbing: state is AddNoteLoadingState ? true : false,
-          child:  SingleChildScrollView(
+          child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsetsDirectional.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              padding: EdgeInsetsDirectional.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
               child: const AddNoteForm(),
             ),
           ),
@@ -96,7 +102,9 @@ class _AddNoteFormState extends State<AddNoteForm> {
                               var noteModel = NoteModel(
                                   title: titleController.text,
                                   content: contentController.text,
-                                  date:   DateFormat.yMMMMd('en_US').format(now).toString(),
+                                  date: DateFormat.yMMMMd('en_US')
+                                      .format(now)
+                                      .toString(),
                                   color: Colors.blue.value);
                               BlocProvider.of<NotesCubit>(context)
                                   .addNote(noteModel);
