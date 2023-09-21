@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
@@ -10,7 +11,10 @@ class NotesCubit extends Cubit<NoteStates> {
   NotesCubit() : super(AddNoteInitial());
   static NotesCubit get(context) => BlocProvider.of(context);
 
+  NoteModel? note;
+  Color? color ;
   addNote(NoteModel model)async{
+    model.color = color!.value;
     emit(AddNoteLoadingState());
    var notesBox= Hive.box<NoteModel>(kNoteBox);
    await notesBox.add(model).then((value) {

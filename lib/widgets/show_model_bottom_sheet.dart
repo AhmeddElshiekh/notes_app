@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:note_app/model/note_model.dart';
+import 'package:note_app/widgets/color_list_view.dart';
 import 'package:note_app/widgets/custom_button.dart';
 import 'package:note_app/widgets/custom_text_form_filed.dart';
 
@@ -85,9 +86,9 @@ class _AddNoteFormState extends State<AddNoteForm> {
                       return null;
                     }),
               ),
-              const SizedBox(
-                height: 100,
-              ),
+              const SizedBox(height: 32,),
+              const ColorListView(),
+
               Padding(
                   padding: const EdgeInsetsDirectional.only(
                       start: 16, end: 16, top: 32),
@@ -123,3 +124,4 @@ class _AddNoteFormState extends State<AddNoteForm> {
     );
   }
 }
+
