@@ -11,8 +11,7 @@ class NotesCubit extends Cubit<NoteStates> {
   NotesCubit() : super(AddNoteInitial());
   static NotesCubit get(context) => BlocProvider.of(context);
 
-  NoteModel? note;
-  Color? color ;
+  Color? color  ;
   addNote(NoteModel model)async{
     model.color = color!.value;
     emit(AddNoteLoadingState());
@@ -23,6 +22,13 @@ class NotesCubit extends Cubit<NoteStates> {
      print('error when add note $error');
      emit(AddNoteErrorState());
    });
+  }
+
+  editNote(NoteModel model){
+    model.color = color!.value;
+    model.save();
+    emit(AddNoteSuccessfulState());
+
   }
 
   List<NoteModel> notes = [];

@@ -44,7 +44,7 @@ class NoteItem extends StatelessWidget {
                     NotesCubit.get(context).getAllNotes();
                   });
 
-                }, icon: const Icon(Icons.delete,size: 30,color: Colors.black,)),
+                }, icon: const Icon(Icons.delete,size: 30,color: Colors.red,)),
               ),
               Padding(
                 padding: const EdgeInsetsDirectional.only(bottom: 44,end: 28),

@@ -19,6 +19,22 @@ class ShowModelSheet extends StatelessWidget {
         if(state is AddNoteSuccessfulState){
           NotesCubit.get(context).getAllNotes();
           Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                backgroundColor: Colors.green,
+                content: Text(' Note added successfully',style: TextStyle(color: Colors.white),),
+              )
+          );
+        }
+        if(state is AddNoteErrorState){
+          NotesCubit.get(context).getAllNotes();
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                backgroundColor: Colors.red,
+                content: Text(' Note not added',style: TextStyle(color: Colors.white),),
+              )
+          );
         }
       },
       builder: (context, state) {
@@ -107,8 +123,8 @@ class _AddNoteFormState extends State<AddNoteForm> {
                                       .format(now)
                                       .toString(),
                                   color: Colors.blue.value);
-                              BlocProvider.of<NotesCubit>(context)
-                                  .addNote(noteModel);
+                              BlocProvider.of<NotesCubit>(context).addNote(noteModel);
+
                             }
                           }),
                       fallback: (context) => const Center(

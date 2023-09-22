@@ -15,15 +15,19 @@ class ColorListView extends StatefulWidget {
 class _ColorListViewState extends State<ColorListView> {
 
 
-  int? currentIndex ;
+  late int currentIndex  ;
 
   @override
+  void initState() {
+    currentIndex  = kColors.indexOf(BlocProvider.of<NotesCubit>(context).color!);
+    super.initState();
+  }
 
   Widget build(BuildContext context) {
     return SizedBox(
       height: 100,
       child: ListView.builder(
-
+        physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemCount: kColors.length,
         itemBuilder: (context, index) =>  GestureDetector(

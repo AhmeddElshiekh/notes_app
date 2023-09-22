@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:note_app/cubit/notes/notes_cubit.dart';
 import 'package:note_app/widgets/action_appBar.dart';
 import 'package:note_app/widgets/custom_text_form_filed.dart';
-
+import 'package:note_app/widgets/edit_note_color_list.dart';
 import '../model/note_model.dart';
 
 class EditNotesScreen extends StatefulWidget {
@@ -49,10 +49,15 @@ class _EditNotesScreenState extends State<EditNotesScreen> {
                 widget.note.content = contentController.text ;
 
               }
-
               widget.note.save();
               NotesCubit.get(context).getAllNotes();
               Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    backgroundColor: Colors.green,
+                    content: Text(' Note updated successfully',style: TextStyle(color: Colors.white),),
+                  )
+              );
             },
           )
         ],
@@ -67,12 +72,16 @@ class _EditNotesScreenState extends State<EditNotesScreen> {
           ),
           Padding(
             padding:
-                const EdgeInsetsDirectional.only(start: 24, end: 24, top: 32),
+                const EdgeInsetsDirectional.only(start: 24, end: 24, top: 32,bottom: 32),
             child: CustomTextFormFiled(
                 hint: 'content', maxLines: 5, controller: contentController),
           ),
+          EditNoteColorListView(note: widget.note)
         ],
       ),
     );
   }
 }
+
+
+

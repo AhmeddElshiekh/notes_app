@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => NotesCubit()..getAllNotes(),
+      create: (context) => NotesCubit()..getAllNotes()..color = const Color(0xFFE9D985),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
